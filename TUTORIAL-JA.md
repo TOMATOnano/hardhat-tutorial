@@ -112,6 +112,36 @@ Hardhat は、タスクとプラグインというコンセプトで設計され
 ### Tasks
 Hardhat をコマンドラインから実行するときはいつも、タスクを実行していることになります。例えば、`npx hardhat compile` は `compile` タスクを実行しています。あなたのプロジェクトで現在利用可能なタスクを見るには、 `npx hardhat` を実行してください。npx hardhat help [task]`を実行することで、どのタスクも自由に調べることができます。
 
+```sh
+GLOBAL OPTIONS:
+
+  --config              Hardhatの設定ファイルです。
+  --emoji               メッセージに絵文字を使用します。
+  --help                このメッセージ、またはタスク名が提供されている場合はタスクのヘルプを表示します。
+  --max-memory          Hardhatが使用できる最大メモリ量です。
+  --network             接続するネットワーク。
+  --show-stack-traces   スタックトレースを表示します。
+  --tsconfig            TypeScriptの設定ファイルです。
+  --verbose             Hardhatの詳細なロギングを有効にします。
+  --version             Hardhatのバージョンを表示します。
+
+AVAILABLE TASKS:
+
+  check                 必要なものをチェックする。
+  clean                 キャッシュをクリアし、すべてのアーティファクトを削除します。
+  compile               プロジェクト全体をコンパイルし、全てのアーティファクトをビルドします。
+  console               hardhatのコンソールを開きます。
+  coverage              テストのコードカバレッジレポートを生成します。
+  flatten               コントラクトとその依存関係を平坦化して出力します。
+  gas-reporter:merge
+  help                  このメッセージを出力します。
+  node                  Hardhat Network 上で JSON-RPC サーバーを開始します。
+  run                   プロジェクトをコンパイルした後に、ユーザー定義のスクリプトを実行します。
+  test                  mochaのテストを実行します
+  typechain             コンパイルしたコントラクトに対して Typechain の型付けを生成する
+  verify                Etherscan上でコントラクトを検証します
+```
+
 >TIP
 >
 >タスクは自分で作成することができます。[Creating a task](https://hardhat.org/hardhat-runner/docs/advanced/create-task)をご覧ください。
