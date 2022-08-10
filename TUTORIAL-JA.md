@@ -22,17 +22,17 @@ To follow this tutorial you should be able to:
 - Understand the basics of how smart contracts work
 - Set up a Metamask wallet
 
-If you can't do any of the above, follow the links and take some time to learn the basics.
+もし、上記のどれかができないなら、リンクをたどって、時間をかけて基本を学んでください。
 
 # 2. Setting up the environment
 ほとんどのEthereumのライブラリやツールはJavaScriptで書かれており、Hardhatもそうです。Node.jsに馴染みがなければ、それはChromeのV8 JavaScriptエンジン上に構築されたJavaScriptランタイムです。これは、ウェブブラウザの外でJavaScriptを実行するための最も一般的なソリューションであり、Hardhatはその上に構築されています。
 
 > TIP
 >
-> Hardhat for Visual Studio Code is the official Hardhat extension that adds advanced support for Solidity to VSCode. If you use Visual Studio Code, give it a try!
+> [Hardhat for Visual Studio Code](https://hardhat.org/hardhat-vscode/docs/overview)は、VSCodeにSolidityの高度なサポートを追加するHardhatの公式エクステンションです。Visual Studio Code を使用している方は、ぜひお試しください。
 
 # Installing Node.js
-You can skip this section if you already have a working Node.js `>=16.0` installation. If not, here's how to install it on Ubuntu, MacOS and Windows.
+すでにNode.js `>=16.0` が動作している場合は、このセクションはスキップできます。そうでない場合は、Ubuntu、MacOS、Windowsにインストールする方法を説明します。
 
 ## Linux
 ### Ubuntu
@@ -66,7 +66,7 @@ mkdir hardhat-tutorial
 cd hardhat-tutorial
 ```
 
-Then initialize an npm project as shown below. You'll be prompted to answer some questions.
+次に、下図のようにnpmプロジェクトを初期化します。いくつかの質問に答えるように促されます。
 
 >TIP
 >
@@ -79,11 +79,11 @@ Now we can install Hardhat:
 ```sh
 npm install --save-dev hardhat
 ```
-In the same directory where you installed Hardhat run:
+Hardhatをインストールしたのと同じディレクトリで実行します。
 ```sh
 npx hardhat
 ```
-Select `Create an empty hardhat.config.js` with your keyboard and hit enter.
+キーボードで `Create an empty hardhat.config.js` を選択し、Enterキーを押します。
 
 ```
 $ npx hardhat
@@ -107,14 +107,14 @@ $ npx hardhat
 Hardhat が実行されると、現在の作業ディレクトリから最も近い `hardhat.config.js` ファイルを探します。このファイルは通常プロジェクトのルートにあり、Hardhat が動作するためには `hardhat.config.js` を空にすれば十分です。あなたのセットアップの全ては、このファイルに含まれています。
 
 ## Hardhat's architecture
-Hardhat は、タスクとプラグインというコンセプトで設計されています。Hardhatの機能の大部分はプラグインによるもので、使いたいプラグインを自由に選択することができます。
+Hardhat は、タスクとプラグインというコンセプトで設計されています。Hardhatの機能の大部分はプラグインによるもので、使いたい[plugins](https://hardhat.org/hardhat-runner/plugins)を自由に選択することができます。
 
 ### Tasks
 Hardhat をコマンドラインから実行するときはいつも、タスクを実行していることになります。例えば、`npx hardhat compile` は `compile` タスクを実行しています。あなたのプロジェクトで現在利用可能なタスクを見るには、 `npx hardhat` を実行してください。npx hardhat help [task]`を実行することで、どのタスクも自由に調べることができます。
 
 >TIP
 >
->You can create your own tasks. Check out the Creating a task guide.
+>タスクは自分で作成することができます。[Creating a task](https://hardhat.org/hardhat-runner/docs/advanced/create-task)をご覧ください。
 
 ### Plugins
 Hardhat、最終的にどのようなツールを使うかという点では独創的ですが、いくつかのデフォルトが組み込まれています。これらはすべて上書きすることができます。ほとんどの場合、あるツールを使用するには、そのツールをHardhatに統合するプラグインを使用することになります。
@@ -143,13 +143,13 @@ module.exports = {
 - 契約を展開するアドレスに全供給量を割り当てる。
 - 誰でもトークンを受け取ることができます。
 - トークンを1つ以上持っている人なら、誰でもトークンを譲渡することができます。
-- The token is non-divisible. You can transfer 1, 2, 3 or 37 tokens but not 2.5.
+- トークンは分割できません。1、2、3、37個のトークンを譲渡することができますが、2.5個は譲渡できません。
 >TIP
 >
 >ERC-20という、イーサリアムのトークン規格をご存じでしょうか。DAIやUSDCなどのトークンはERC-20規格を実装しているため、ERC-20トークンを扱えるソフトウェアであればすべて互換性を持つことができます。簡単のために、私たちが作ろうとしているトークンはERC-20規格を実装していません。
 
 ## Writing smart contracts
-Start by creating a new directory called `contracts` and create a file inside the directory called `Token.sol`.
+まず、`contracts` という名前の新しいディレクトリを作り、その中に `Token.sol` という名前のファイルを作成します。
 
 下のコードをファイルに貼り付けて、少し時間をおいて読んでみてください。シンプルで、Solidity の基本を説明するコメントでいっぱいです。
 
