@@ -149,7 +149,7 @@ AVAILABLE TASKS:
 ### Plugins
 Hardhat、最終的にどのようなツールを使うかという点では独創的ですが、いくつかのデフォルトが組み込まれています。これらはすべて上書きすることができます。ほとんどの場合、あるツールを使用するには、そのツールをHardhatに統合するプラグインを使用することになります。
 
-このチュートリアルでは、スマートコントラクトの開発に必要なものがすべて揃っている、私たちの推奨プラグイン `@nomicfoundation/hardhat-toolbox` を使用する予定です。
+このチュートリアルでは、スマートコントラクトの開発に必要なものがすべて揃っている、私たちの推奨プラグイン `@nomicfoundation/hardhat-toolbox` を使用する予定です。[hardhat-toolbox](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox)
 
 インストールするには、プロジェクトディレクトリでこれを実行してください。
 
@@ -187,7 +187,7 @@ module.exports = {
 >
 >Visual Studio Code で Solidity の構文強調表示と編集支援を行うには、Hardhat for Visual Studio Code をお試しください。
 
-```sh
+```js
 //SPDX-License-Identifier: UNLICENSED
 
 // Solidity ファイルはこのプラグマで開始する必要があります。
@@ -275,7 +275,7 @@ The contract has been successfully compiled and it's ready to be used.
 
 まずは、以下のコードから始めましょう。次に説明しますが、とりあえず、これを `Token.js` に貼り付けてください。
 
-```sh
+```js
 const { expect } = require("chai");
 
 describe("Token contract", function () {
@@ -302,34 +302,39 @@ $ npx hardhat test
 
   1 passing (663ms)
 ```
+
 This means the test passed. Let's now explain each line:
-```sh
+
+```js
 const [owner] = await ethers.getSigners();
 ```
+
 ethers.jsにおける`Signe`rは、Ethereumのアカウントを表すオブジェクトです。コントラクトや他のアカウントにトランザクションを送信するために使用されます。ここでは、接続しているノード（この場合は Hardhat Network）のアカウント一覧を取得し、最初のものだけを保持しています。
 
 変数 `ethers` はグローバルスコープで利用可能です。もし、コードが常に明示的であることが好きなら、この行を一番上に追加することができます。
-```sh
+
+```js
 const { ethers } = require("hardhat");
 ```
 > [Signers](https://docs.ethers.io/v5/api/signer/)
-```sh
+
+```js
 const Token = await ethers.getContractFactory("Token");
 ```
 ethers.jsの `ContractFactory` は新しいスマートコントラクトをデプロイするために使用される抽象化であり、ここでの `Token` は私たちのトークンコントラクトのインスタンスのための工場です。
-```sh
+```js
 const hardhatToken = await Token.deploy();
 ```
 `ContractFactory` に対して `deploy()` を呼び出すとデプロイが開始され、`Contract` に解決する `Promise` が返されます。これは、スマートコントラクトの各機能に対応したメソッドを持つオブジェクトです。
 
-```sh
+```js
 const ownerBalance = await hardhatToken.balanceOf(owner.address);
 ```
 コントラクトがデプロイされると、`hardhatToken` に対してコントラクトメソッドを呼び出すことができます。ここでは、コントラクトの `balanceOf()` メソッドを呼び出して、オーナーアカウントの残高を取得します。
 
 トークンをデプロイしたアカウントは、その全供給量を取得することを思い出してください。デフォルトでは、 `ContractFactory` と `Contract` のインスタンスは最初の署名者に接続されています。つまり、変数 `owner` にあるアカウントがデプロイを実行し、 `balanceOf()` が供給量全体を返すはずです。
 
-```sh
+```js
 expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
 ```
 ここで再び `Contract` インスタンスを使用して Solidity コード内のスマートコントラクト関数を呼び出しています。totalSupply`() はトークンの供給量を返し、それが `ownerBalance` と等しいかどうかをチェックしています。
@@ -340,7 +345,7 @@ expect(await hardhatToken.totalSupply()).to.equal(ownerBalance);
  ## Using a different account
 もし、デフォルト以外のアカウント(ethers.jsの用語では `Signer` )からトランザクションを送信してコードをテストする必要がある場合、以下のようにethers.jsの `Contract` オブジェクトの `connect()` メソッドを使用して異なるアカウントに接続することが可能です。
 
-```sh
+```js
 const { expect } = require("chai");
 
 describe("Token contract", function () {
@@ -369,7 +374,7 @@ describe("Token contract", function () {
 
 フィクスチャを使用することで、コードの重複を避け、テストスイートのパフォーマンスを向上させることができます。フィクスチャとは、最初に呼び出されたときだけ実行される設定関数のことです。それ以降の起動では、再実行する代わりに、Hardhat はネットワークの状態を、フィクスチャが最初に実行された後の時点の状態にリセットします。
 
-```sh
+```js
 const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 const { expect } = require("chai");
 
@@ -417,7 +422,7 @@ describe("Token contract", function () {
 ## Full coverage
 さて、コントラクトのテストに必要な基本を説明しましたが、ここではトークンの完全なテストスイートを、Mocha とテストの構成方法に関する多くの追加情報とともに紹介します。熟読されることをお勧めします。
 
-```sh
+```js
 // これはテストファイルの例です。
 // Hardhat は `test/` にあるすべての *.js ファイルを実行するので、新しいファイルを自由に追加してください。
 
@@ -562,6 +567,7 @@ Hardhatには、開発用に設計されたローカルなEthereumネットワ�
 Hardhat Network 上でコントラクトとテストを実行するとき、Solidity コードから `console.log()` を呼び出して、ロギングメッセージとコントラクト変数を表示することができます。これを使用するには、コントラクトコードの中で `hardhat/console.sol` をインポートする必要があります。
 
 This is what it looks like:
+
 ```sh
 pragma solidity ^0.8.9;
 
@@ -591,7 +597,9 @@ function transfer(address to, uint256 amount) external {
     emit Transfer(msg.sender, to, amount);
 }
 ```
+
 ログの出力は、テストを実行したときに表示されます。
+
 ```sh
 $ npx hardhat test
 
@@ -623,7 +631,7 @@ dAppを他の人と共有する準備ができたら、それをライブネッ�
 
 プロジェクトのルートディレクトリ内に新しいディレクトリ `scripts` を作成し、そのディレクトリ内の `deploy.js` ファイルに次のコードを貼り付けてみましょう。
 
-```sh
+```js
 async function main() {
   const [deployer] = await ethers.getSigners();
 
@@ -644,11 +652,15 @@ main()
     process.exit(1);
   });
 ```
+
 Hardhatに特定のEthereumネットワークに接続するよう指示するには、任意のタスクを実行する際に、以下のように `--network` パラメータを使用します。
+
 ```sh
 npx hardhat run scripts/deploy.js --network <network-name>
 ```
+
 現在の設定では、`--network` パラメータを付けずに実行すると、Hardhat Network の組み込みインスタンスに対してコードが実行されることになります。このシナリオでは、Hardhat の実行が終了すると、デプロイは実際に失われますが、デプロイメントコードが動作することをテストするのに便利です。
+
 ```sh
 $ npx hardhat run scripts/deploy.js --network rinkeby
 
@@ -661,7 +673,8 @@ Token address: 0x3265da402CAf1f082c7e9166b5908C82A9e6A613
 ## Deploying to remote networks
 メインネットやテストネットなどのリモートネットワークにデプロイするには、 `hardhat.config.js` ファイルにネットワークのエントリを追加する必要があります。この例では Goerli を使用しますが、同様に任意のネットワークを追加することができます。
 
-```sh
+
+```js
 require("@nomicfoundation/hardhat-toolbox");
 
 // https://www.alchemyapi.io にアクセスし、サインアップして、そのダッシュボードで新しいAppを作成し、「KEY」をそのキーに置き換えます
